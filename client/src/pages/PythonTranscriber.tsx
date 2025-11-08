@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Code, Sparkles, CheckCircle2, Bug, Download, Home } from "lucide-react";
+import { Code, Sparkles, CheckCircle2, Bug, Download, ArrowLeft } from "lucide-react";
 import { Link } from "wouter";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
@@ -130,12 +130,10 @@ export default function PythonTranscriber() {
         <div className="max-w-7xl mx-auto px-4 md:px-8 h-16 flex items-center justify-between gap-4">
           <div className="flex items-center gap-4">
             <Link href="/">
-              <Button variant="ghost" size="sm" data-testid="link-home">
-                <Home className="w-4 h-4 mr-2" />
-                Home
+              <Button variant="outline" size="icon" data-testid="button-back-home">
+                <ArrowLeft className="w-4 h-4" />
               </Button>
             </Link>
-            <div className="h-6 w-px bg-border" />
             <h1 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-violet-600 to-fuchsia-600 bg-clip-text text-transparent" data-testid="text-page-title">
               Python to AutoHotkey Converter
             </h1>

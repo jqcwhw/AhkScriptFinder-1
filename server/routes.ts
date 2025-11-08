@@ -358,6 +358,30 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.get("/api/ps99/exists", async (req, res) => {
+    try {
+      const type = req.query.type as string;
+      const id = req.query.id as string;
+      
+      if (!type || !id) {
+        return res.status(400).json({ status: 'error', message: 'Type and ID are required' });
+      }
+
+      const url = `${PS99_API_BASE}/exists/${encodeURIComponent(type)}/${encodeURIComponent(id)}`;
+      const response = await fetch(url);
+      
+      if (!response.ok) {
+        throw new Error(`PS99 API error: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      res.json(data);
+    } catch (error) {
+      console.error('Error checking existence:', error);
+      res.status(500).json({ status: 'error', message: 'Failed to check existence' });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

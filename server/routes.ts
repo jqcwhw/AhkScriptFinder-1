@@ -179,6 +179,138 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Big Games PS99 API Routes
+  const PS99_API_BASE = 'https://ps99.biggamesapi.io/api';
+
+  app.get("/api/ps99/clans", async (req, res) => {
+    try {
+      const page = parseInt(req.query.page as string) || 1;
+      const pageSize = parseInt(req.query.pageSize as string) || 10;
+      const sort = (req.query.sort as string) || 'Points';
+      const sortOrder = (req.query.sortOrder as string) || 'desc';
+
+      const url = `${PS99_API_BASE}/clans?page=${page}&pageSize=${pageSize}&sort=${sort}&sortOrder=${sortOrder}`;
+      const response = await fetch(url);
+      
+      if (!response.ok) {
+        throw new Error(`PS99 API error: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      res.json(data);
+    } catch (error) {
+      console.error('Error fetching clans:', error);
+      res.status(500).json({ status: 'error', message: 'Failed to fetch clans data' });
+    }
+  });
+
+  app.get("/api/ps99/clan/:name", async (req, res) => {
+    try {
+      const clanName = encodeURIComponent(req.params.name);
+      const url = `${PS99_API_BASE}/clan/${clanName}`;
+      const response = await fetch(url);
+      
+      if (!response.ok) {
+        if (response.status === 404) {
+          return res.status(404).json({ status: 'error', message: 'Clan not found' });
+        }
+        throw new Error(`PS99 API error: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      res.json(data);
+    } catch (error) {
+      console.error('Error fetching clan:', error);
+      res.status(500).json({ status: 'error', message: 'Failed to fetch clan data' });
+    }
+  });
+
+  app.get("/api/ps99/clan-battle", async (req, res) => {
+    try {
+      const url = `${PS99_API_BASE}/activeClanBattle`;
+      const response = await fetch(url);
+      
+      if (!response.ok) {
+        throw new Error(`PS99 API error: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      res.json(data);
+    } catch (error) {
+      console.error('Error fetching clan battle:', error);
+      res.status(500).json({ status: 'error', message: 'Failed to fetch clan battle data' });
+    }
+  });
+
+  app.get("/api/ps99/rap", async (req, res) => {
+    try {
+      const url = `${PS99_API_BASE}/rap`;
+      const response = await fetch(url);
+      
+      if (!response.ok) {
+        throw new Error(`PS99 API error: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      res.json(data);
+    } catch (error) {
+      console.error('Error fetching RAP data:', error);
+      res.status(500).json({ status: 'error', message: 'Failed to fetch RAP data' });
+    }
+  });
+
+  app.get("/api/ps99/exists", async (req, res) => {
+    try {
+      const url = `${PS99_API_BASE}/exists`;
+      const response = await fetch(url);
+      
+      if (!response.ok) {
+        throw new Error(`PS99 API error: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      res.json(data);
+    } catch (error) {
+      console.error('Error fetching exists data:', error);
+      res.status(500).json({ status: 'error', message: 'Failed to fetch exists data' });
+    }
+  });
+
+  app.get("/api/ps99/collections", async (req, res) => {
+    try {
+      const url = `${PS99_API_BASE}/collections`;
+      const response = await fetch(url);
+      
+      if (!response.ok) {
+        throw new Error(`PS99 API error: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      res.json(data);
+    } catch (error) {
+      console.error('Error fetching collections:', error);
+      res.status(500).json({ status: 'error', message: 'Failed to fetch collections' });
+    }
+  });
+
+  app.get("/api/ps99/collection/:name", async (req, res) => {
+    try {
+      const collectionName = encodeURIComponent(req.params.name);
+      const url = `${PS99_API_BASE}/collection/${collectionName}`;
+      const response = await fetch(url);
+      
+      if (!response.ok) {
+        throw new Error(`PS99 API error: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      res.json(data);
+    } catch (error) {
+      console.error('Error fetching collection:', error);
+      res.status(500).json({ status: 'error', message: 'Failed to fetch collection data' });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

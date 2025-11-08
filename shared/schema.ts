@@ -53,3 +53,70 @@ export interface PersonalScript extends InsertPersonalScript {
   id: string;
   isPersonal: boolean;
 }
+
+// Big Games PS99 API schemas
+export const bigGamesApiKeySchema = z.object({
+  apiKey: z.string().min(1),
+});
+
+export type BigGamesApiKey = z.infer<typeof bigGamesApiKeySchema>;
+
+export interface ClanData {
+  Name: string;
+  Created: number;
+  Owner?: number;
+  Icon: string;
+  Desc?: string;
+  MemberCapacity: number;
+  OfficerCapacity?: number;
+  GuildLevel?: number;
+  Members?: Array<{
+    UserID: number;
+    PermissionLevel: number;
+    JoinTime: number;
+  }>;
+  Contribution?: {
+    Battle?: Array<{
+      UserID: number;
+      Points: number;
+    }>;
+  };
+  CountryCode: string;
+  DepositedDiamonds: number;
+  Points: number;
+  BronzeMedals?: number;
+  SilverMedals?: number;
+  GoldMedals?: number;
+}
+
+export interface ClanBattleData {
+  status: string;
+  data: {
+    Clans: string[];
+    EndTime: number;
+    GoalDiamonds: number;
+    StartTime: number;
+  } | null;
+}
+
+export interface RAPItem {
+  category: string;
+  configData: {
+    id: string;
+    pt?: number;
+    sh?: boolean;
+    tn?: number;
+  };
+  value: number;
+}
+
+export interface ExistsItem {
+  category: string;
+  configData: {
+    id: string;
+    pt?: number;
+    sh?: boolean;
+    tn?: number;
+  };
+  value: number;
+}

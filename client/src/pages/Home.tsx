@@ -870,10 +870,10 @@ export default function Home() {
             </TabsTrigger>
           </TabsList>
 
-          <TabsContent value="search" className="space-y-4">
+          <TabsContent value="search" className="space-y-4 bg-background rounded-lg p-4">
             {searchMutation.isPending ? (
               <div className="text-center py-12">
-                <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4 text-primary" />
+                <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4 text-emerald-600" />
                 <p className="text-muted-foreground">Searching GitHub for AutoHotkey scripts...</p>
               </div>
             ) : !hasSearched ? (
@@ -896,7 +896,7 @@ export default function Home() {
               </div>
             ) : (
               <>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-emerald-800 dark:text-emerald-200 font-medium">
                   Found {searchResults.length} AutoHotkey scripts matching "{searchQuery}"
                   {searchMutation.data?.totalCount && searchMutation.data.totalCount > searchResults.length && (
                     <span> (showing first {searchResults.length} of {searchMutation.data.totalCount} total results)</span>
@@ -904,31 +904,33 @@ export default function Home() {
                 </p>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                   {searchResults.map((result: SearchResult) => (
-                    <SearchResultCard
-                      key={result.id}
-                      result={result}
-                      onDownload={handleDownload}
-                    />
+                    <div key={result.id} className="bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-950/40 dark:to-teal-950/40 border-2 border-emerald-300 dark:border-emerald-700 rounded-lg overflow-hidden">
+                      <SearchResultCard
+                        result={result}
+                        onDownload={handleDownload}
+                      />
+                    </div>
                   ))}
                 </div>
               </>
             )}
           </TabsContent>
 
-          <TabsContent value="curated" className="space-y-4">
+          <TabsContent value="curated" className="space-y-4 bg-background rounded-lg p-4">
             {curatedScriptsQuery.isLoading ? (
               <div className="flex items-center justify-center py-12">
-                <Loader2 className="w-8 h-8 animate-spin text-muted-foreground" />
+                <Loader2 className="w-8 h-8 animate-spin text-emerald-600" />
               </div>
             ) : curatedScripts.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {curatedScripts.map((script) => (
-                  <ScriptCard
-                    key={script.id}
-                    script={script}
-                    onDownload={handleDownload}
-                    onPreview={handlePreview}
-                  />
+                  <div key={script.id} className="bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-950/40 dark:to-teal-950/40 border-2 border-emerald-300 dark:border-emerald-700 rounded-lg overflow-hidden">
+                    <ScriptCard
+                      script={script}
+                      onDownload={handleDownload}
+                      onPreview={handlePreview}
+                    />
+                  </div>
                 ))}
               </div>
             ) : (
@@ -938,16 +940,16 @@ export default function Home() {
             )}
           </TabsContent>
 
-          <TabsContent value="personal" className="space-y-4">
+          <TabsContent value="personal" className="space-y-4 bg-background rounded-lg p-4">
             <div className="flex justify-end mb-4">
-              <Button onClick={() => setAddDialogOpen(true)} data-testid="button-add-script">
+              <Button onClick={() => setAddDialogOpen(true)} data-testid="button-add-script" className="bg-emerald-600 hover:bg-emerald-700">
                 <Plus className="h-4 w-4 mr-2" />
                 Add Script
               </Button>
             </div>
             {personalScriptsQuery.isLoading ? (
               <div className="text-center py-12">
-                <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4 text-primary" />
+                <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4 text-emerald-600" />
                 <p className="text-muted-foreground">Loading your scripts...</p>
               </div>
             ) : personalScripts.length === 0 ? (
@@ -959,32 +961,37 @@ export default function Home() {
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {personalScripts.map((script: Script) => (
-                  <ScriptCard
-                    key={script.id}
-                    script={script}
-                    onDownload={handleDownload}
-                    onPreview={handlePreview}
-                    onDelete={handleDeleteScript}
-                  />
+                  <div key={script.id} className="bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-950/40 dark:to-teal-950/40 border-2 border-emerald-300 dark:border-emerald-700 rounded-lg overflow-hidden">
+                    <ScriptCard
+                      script={script}
+                      onDownload={handleDownload}
+                      onPreview={handlePreview}
+                      onDelete={handleDeleteScript}
+                    />
+                  </div>
                 ))}
               </div>
             )}
           </TabsContent>
 
-          <TabsContent value="ai" className="space-y-4">
-            <AIGenerator
-              prompt={aiPrompt}
-              onPromptChange={setAiPrompt}
-              onGenerate={handleGenerate}
-              isGenerating={generateMutation.isPending}
-            />
+          <TabsContent value="ai" className="space-y-4 bg-background rounded-lg p-4">
+            <div className="border-2 border-emerald-300 dark:border-emerald-700 rounded-lg overflow-hidden">
+              <AIGenerator
+                prompt={aiPrompt}
+                onPromptChange={setAiPrompt}
+                onGenerate={handleGenerate}
+                isGenerating={generateMutation.isPending}
+              />
+            </div>
             {generatedCode && (
-              <CodeViewer code={generatedCode} title="Generated Script" />
+              <div className="border-2 border-emerald-300 dark:border-emerald-700 rounded-lg overflow-hidden">
+                <CodeViewer code={generatedCode} title="Generated Script" />
+              </div>
             )}
           </TabsContent>
 
-          <TabsContent value="tester" className="space-y-4">
-            <div className="bg-card rounded-lg border p-6 space-y-4">
+          <TabsContent value="tester" className="space-y-4 bg-background rounded-lg p-4">
+            <div className="bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-950/40 dark:to-teal-950/40 border-2 border-emerald-300 dark:border-emerald-700 rounded-lg p-6 space-y-4">
               <div>
                 <h2 className="text-2xl font-bold mb-2">Script Tester & Validator</h2>
                 <p className="text-muted-foreground mb-4">
@@ -1010,6 +1017,7 @@ F1::MsgBox('Hello World!')"
 
                 <div className="flex gap-2">
                   <Button 
+                    className="bg-emerald-600 hover:bg-emerald-700"
                     onClick={() => {
                       if (!aiPrompt.trim()) {
                         toast({
@@ -1098,8 +1106,8 @@ F1::MsgBox('Hello World!')"
             </div>
           </TabsContent>
 
-          <TabsContent value="optimizer" className="space-y-6">
-            <div className="bg-gradient-to-r from-emerald-50 to-teal-50 dark:from-emerald-950/20 dark:to-teal-950/20 rounded-lg border p-6">
+          <TabsContent value="optimizer" className="space-y-6 bg-background rounded-lg p-4">
+            <div className="bg-gradient-to-r from-emerald-50 to-teal-50 dark:from-emerald-950/30 dark:to-teal-950/30 rounded-lg border-2 border-emerald-300 dark:border-emerald-700 p-6">
               <h2 className="text-2xl font-bold mb-2 text-emerald-900 dark:text-emerald-100">System Performance Optimizer</h2>
               <p className="text-emerald-800 dark:text-emerald-200 mb-4">
                 Boost your PC's gaming performance with specialized tools for RAM cleaning, background app management, and system monitoring. Perfect for low-end PCs and Roblox players.
@@ -1132,12 +1140,13 @@ F1::MsgBox('Hello World!')"
                     {curatedScripts
                       .filter((script) => script.tags?.some(tag => ['RAM', 'Memory', 'Low-End PC'].includes(tag)))
                       .map((script) => (
-                        <ScriptCard
-                          key={script.id}
-                          script={script}
-                          onDownload={handleDownload}
-                          onPreview={handlePreview}
-                        />
+                        <div key={script.id} className="bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-950/40 dark:to-teal-950/40 border-2 border-emerald-300 dark:border-emerald-700 rounded-lg overflow-hidden">
+                          <ScriptCard
+                            script={script}
+                            onDownload={handleDownload}
+                            onPreview={handlePreview}
+                          />
+                        </div>
                       ))}
                   </div>
                 </div>
@@ -1151,12 +1160,13 @@ F1::MsgBox('Hello World!')"
                     {curatedScripts
                       .filter((script) => script.tags?.some(tag => ['System', 'Optimizer', 'Process', 'Manager', 'Cleanup'].includes(tag)))
                       .map((script) => (
-                        <ScriptCard
-                          key={script.id}
-                          script={script}
-                          onDownload={handleDownload}
-                          onPreview={handlePreview}
-                        />
+                        <div key={script.id} className="bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-950/40 dark:to-teal-950/40 border-2 border-emerald-300 dark:border-emerald-700 rounded-lg overflow-hidden">
+                          <ScriptCard
+                            script={script}
+                            onDownload={handleDownload}
+                            onPreview={handlePreview}
+                          />
+                        </div>
                       ))}
                   </div>
                 </div>
@@ -1170,12 +1180,13 @@ F1::MsgBox('Hello World!')"
                     {curatedScripts
                       .filter((script) => script.tags?.some(tag => ['Monitor', 'CPU', 'GPU', 'Performance'].includes(tag)))
                       .map((script) => (
-                        <ScriptCard
-                          key={script.id}
-                          script={script}
-                          onDownload={handleDownload}
-                          onPreview={handlePreview}
-                        />
+                        <div key={script.id} className="bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-950/40 dark:to-teal-950/40 border-2 border-emerald-300 dark:border-emerald-700 rounded-lg overflow-hidden">
+                          <ScriptCard
+                            script={script}
+                            onDownload={handleDownload}
+                            onPreview={handlePreview}
+                          />
+                        </div>
                       ))}
                   </div>
                 </div>

@@ -843,13 +843,13 @@ export default function Home() {
           />
         </div>
 
-        <div className="bg-gradient-to-br from-emerald-50 via-green-50 to-teal-50 dark:from-emerald-950/30 dark:via-green-950/20 dark:to-teal-950/30 p-6 rounded-lg border border-emerald-200 dark:border-emerald-800/30">
-          <div className="mb-4">
-            <h2 className="text-2xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">AutoHotkey Script Tools</h2>
+        <div className="bg-background p-6 rounded-lg">
+          <div className="mb-4 bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-950/40 dark:to-teal-950/40 border-2 border-emerald-400 dark:border-emerald-600 rounded-lg p-4">
+            <h2 className="text-2xl font-bold text-emerald-700 dark:text-emerald-300">AutoHotkey Script Tools</h2>
             <p className="text-sm text-emerald-800 dark:text-emerald-200 mt-1">Search GitHub, browse curated scripts, manage your library, and generate custom AHK scripts</p>
           </div>
           <Tabs defaultValue="search" className="space-y-6">
-            <TabsList className="w-full justify-start overflow-x-auto flex-wrap h-auto gap-2 bg-emerald-100/50 dark:bg-emerald-900/20">
+            <TabsList className="w-full justify-start overflow-x-auto flex-wrap h-auto gap-2 bg-emerald-50 dark:bg-emerald-950/30 border-2 border-emerald-300 dark:border-emerald-700 rounded-lg">
             <TabsTrigger value="search" data-testid="tab-search" className="data-[state=active]:bg-emerald-600 data-[state=active]:text-white">
               GitHub Search
             </TabsTrigger>

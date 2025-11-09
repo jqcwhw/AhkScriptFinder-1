@@ -7,9 +7,22 @@ interface SearchBarProps {
   onChange: (value: string) => void;
   onSearch: () => void;
   placeholder?: string;
+  inputHeight?: string;
+  buttonHeight?: string;
+  textSize?: string;
+  iconSize?: string;
 }
 
-export default function SearchBar({ value, onChange, onSearch, placeholder = "Search for AutoHotkey macros..." }: SearchBarProps) {
+export default function SearchBar({ 
+  value, 
+  onChange, 
+  onSearch, 
+  placeholder = "Search for AutoHotkey macros...",
+  inputHeight = "h-24",
+  buttonHeight = "h-24",
+  textSize = "text-xl",
+  iconSize = "h-7 w-7"
+}: SearchBarProps) {
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       onSearch();
@@ -19,21 +32,21 @@ export default function SearchBar({ value, onChange, onSearch, placeholder = "Se
   return (
     <div className="flex gap-3 w-full">
       <div className="relative flex-1">
-        <Search className="absolute left-5 top-1/2 transform -translate-y-1/2 h-7 w-7 text-muted-foreground pointer-events-none" />
+        <Search className={`absolute left-5 top-1/2 transform -translate-y-1/2 ${iconSize} text-muted-foreground pointer-events-none`} />
         <Input
           type="search"
           placeholder={placeholder}
           value={value}
           onChange={(e) => onChange(e.target.value)}
           onKeyPress={handleKeyPress}
-          className="pl-14 h-24 text-xl font-medium"
+          className={`pl-14 ${inputHeight} ${textSize} font-medium`}
           data-testid="input-search"
         />
       </div>
       <Button 
         onClick={onSearch}
         size="lg"
-        className="h-24 px-10 text-xl font-semibold"
+        className={`${buttonHeight} px-10 ${textSize} font-semibold`}
         data-testid="button-search"
       >
         Search

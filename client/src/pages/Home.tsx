@@ -787,16 +787,39 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
       <header className="border-b border-emerald-500/20 bg-slate-900/80 backdrop-blur-xl sticky top-0 z-50 shadow-2xl shadow-emerald-500/10">
-        <div className="max-w-7xl mx-auto px-4 md:px-8 h-20 flex items-center justify-between gap-4">
+        <div className="max-w-7xl mx-auto px-4 md:px-8 py-3 flex items-center justify-between gap-4 flex-wrap">
           <div className="relative group">
             <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-lg blur opacity-30 group-hover:opacity-50 transition-opacity"></div>
             <div className="relative bg-gradient-to-br from-slate-800 to-slate-900 border border-emerald-500/30 rounded-lg px-6 py-3 shadow-xl">
-              <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent" data-testid="text-app-title">
+              <h1 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent" data-testid="text-app-title">
                 Milamoos AutoHotkey Macro Hub
               </h1>
             </div>
           </div>
-          <ThemeToggle />
+          
+          <div className="flex items-center gap-3 flex-wrap">
+            <Link href="/ps99-tools" data-testid="link-ps99-tools-header">
+              <div className="relative group/tab">
+                <div className="absolute inset-0 bg-gradient-to-r from-violet-500 to-purple-500 rounded-xl blur-md opacity-20 group-hover/tab:opacity-40 transition-opacity"></div>
+                <div className="relative flex items-center gap-3 px-6 py-3 bg-gradient-to-br from-slate-800/90 to-slate-900/90 hover:from-slate-800 hover:to-slate-900 border-2 border-violet-500/30 hover:border-violet-400/50 rounded-xl transition-all cursor-pointer shadow-xl shadow-violet-500/10">
+                  <Trophy className="w-5 h-5 text-violet-400" />
+                  <span className="text-base font-semibold text-violet-300">PS99 Tools</span>
+                </div>
+              </div>
+            </Link>
+            
+            <Link href="/python-transcriber" data-testid="link-python-transcriber-header">
+              <div className="relative group/tab">
+                <div className="absolute inset-0 bg-gradient-to-r from-fuchsia-500 to-pink-500 rounded-xl blur-md opacity-20 group-hover/tab:opacity-40 transition-opacity"></div>
+                <div className="relative flex items-center gap-3 px-6 py-3 bg-gradient-to-br from-slate-800/90 to-slate-900/90 hover:from-slate-800 hover:to-slate-900 border-2 border-fuchsia-500/30 hover:border-fuchsia-400/50 rounded-xl transition-all cursor-pointer shadow-xl shadow-fuchsia-500/10">
+                  <Code2 className="w-5 h-5 text-fuchsia-400" />
+                  <span className="text-base font-semibold text-fuchsia-300">Python Transcriber</span>
+                </div>
+              </div>
+            </Link>
+            
+            <ThemeToggle />
+          </div>
         </div>
       </header>
 
@@ -1191,56 +1214,6 @@ F1::MsgBox('Hello World!')"
           </TabsContent>
             </Tabs>
           </div>
-        </div>
-
-        <div className="mt-8 grid md:grid-cols-2 gap-6">
-          <Link href="/ps99-tools" data-testid="link-ps99-tools-card">
-            <div className="relative group">
-              <div className="absolute inset-0 bg-gradient-to-r from-violet-500 to-purple-500 rounded-xl blur-md opacity-20 group-hover:opacity-40 transition-opacity"></div>
-              <Card className="relative p-4 bg-gradient-to-br from-slate-800/90 to-slate-900/90 border-2 border-violet-500/30 hover:border-violet-400/50 transition-all duration-300 cursor-pointer shadow-2xl shadow-violet-500/20" data-testid="card-ps99-tools">
-                <div className="flex items-center justify-between mb-2">
-                  <div className="flex items-center gap-2">
-                    <div className="p-2 bg-violet-500/20 rounded-lg ring-2 ring-violet-500/30">
-                      <Trophy className="w-4 h-4 text-violet-400" />
-                    </div>
-                    <h2 className="text-base font-semibold text-violet-300">PS99 Tools</h2>
-                  </div>
-                  <Gamepad2 className="w-5 h-5 text-violet-500/40" />
-                </div>
-                <p className="text-slate-300 text-sm mb-3 leading-relaxed">
-                  Real-time Pet Simulator 99 clan tracker, RAP checker, and battle monitor
-                </p>
-                <div className="flex items-center gap-2 text-xs font-semibold text-violet-400 group-hover:text-violet-300 transition-colors">
-                  <span>Explore Live Data</span>
-                  <ArrowRight className="w-3 h-3 group-hover:translate-x-2 transition-transform" />
-                </div>
-              </Card>
-            </div>
-          </Link>
-
-          <Link href="/python-transcriber" data-testid="link-python-transcriber-card">
-            <div className="relative group">
-              <div className="absolute inset-0 bg-gradient-to-r from-fuchsia-500 to-pink-500 rounded-xl blur-md opacity-20 group-hover:opacity-40 transition-opacity"></div>
-              <Card className="relative p-4 bg-gradient-to-br from-slate-800/90 to-slate-900/90 border-2 border-fuchsia-500/30 hover:border-fuchsia-400/50 transition-all duration-300 cursor-pointer shadow-2xl shadow-fuchsia-500/20" data-testid="card-python-transcriber">
-                <div className="flex items-center justify-between mb-2">
-                  <div className="flex items-center gap-2">
-                    <div className="p-2 bg-fuchsia-500/20 rounded-lg ring-2 ring-fuchsia-500/30">
-                      <Code2 className="w-4 h-4 text-fuchsia-400" />
-                    </div>
-                    <h2 className="text-base font-semibold text-fuchsia-300">Python Transcriber</h2>
-                  </div>
-                  <Sparkles className="w-5 h-5 text-fuchsia-500/40" />
-                </div>
-                <p className="text-slate-300 text-sm mb-3 leading-relaxed">
-                  AI-powered Python to AutoHotkey converter with validation and debugging
-                </p>
-                <div className="flex items-center gap-2 text-xs font-semibold text-fuchsia-400 group-hover:text-fuchsia-300 transition-colors">
-                  <span>Convert Code Now</span>
-                  <ArrowRight className="w-3 h-3 group-hover:translate-x-2 transition-transform" />
-                </div>
-              </Card>
-            </div>
-          </Link>
         </div>
       </main>
 

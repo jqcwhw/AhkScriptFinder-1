@@ -841,29 +841,29 @@ export default function Home() {
               </div>
             </div>
             <Tabs defaultValue="search" className="space-y-6">
-              <TabsList className="w-full justify-start overflow-x-auto flex-wrap h-auto gap-2 bg-slate-800/50 border border-emerald-500/20 rounded-xl p-2 shadow-lg backdrop-blur-sm">
-                <TabsTrigger value="search" data-testid="tab-search" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-emerald-500 data-[state=active]:to-teal-500 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-emerald-500/30 flex items-center gap-2 transition-all duration-300">
-                  <Github className="w-4 h-4" />
+              <TabsList className="w-full justify-start overflow-x-auto flex-wrap h-auto gap-3 bg-slate-800/50 border border-emerald-500/20 rounded-xl p-3 shadow-lg backdrop-blur-sm">
+                <TabsTrigger value="search" data-testid="tab-search" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-emerald-500 data-[state=active]:to-teal-500 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-emerald-500/30 flex items-center gap-2 px-4 py-3 text-base transition-all duration-300">
+                  <Github className="w-5 h-5" />
                   <span className="font-semibold">GitHub Search</span>
                 </TabsTrigger>
-                <TabsTrigger value="curated" data-testid="tab-curated" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-emerald-500 data-[state=active]:to-teal-500 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-emerald-500/30 flex items-center gap-2 transition-all duration-300">
-                  <Library className="w-4 h-4" />
+                <TabsTrigger value="curated" data-testid="tab-curated" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-emerald-500 data-[state=active]:to-teal-500 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-emerald-500/30 flex items-center gap-2 px-4 py-3 text-base transition-all duration-300">
+                  <Library className="w-5 h-5" />
                   <span className="font-semibold">Macro Library</span>
                 </TabsTrigger>
-                <TabsTrigger value="personal" data-testid="tab-personal" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-emerald-500 data-[state=active]:to-teal-500 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-emerald-500/30 flex items-center gap-2 transition-all duration-300">
-                  <FolderOpen className="w-4 h-4" />
+                <TabsTrigger value="personal" data-testid="tab-personal" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-emerald-500 data-[state=active]:to-teal-500 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-emerald-500/30 flex items-center gap-2 px-4 py-3 text-base transition-all duration-300">
+                  <FolderOpen className="w-5 h-5" />
                   <span className="font-semibold">My Macros</span>
                 </TabsTrigger>
-                <TabsTrigger value="ai" data-testid="tab-ai" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-emerald-500 data-[state=active]:to-teal-500 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-emerald-500/30 flex items-center gap-2 transition-all duration-300">
-                  <Wand2 className="w-4 h-4" />
+                <TabsTrigger value="ai" data-testid="tab-ai" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-emerald-500 data-[state=active]:to-teal-500 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-emerald-500/30 flex items-center gap-2 px-4 py-3 text-base transition-all duration-300">
+                  <Wand2 className="w-5 h-5" />
                   <span className="font-semibold">AI Generator</span>
                 </TabsTrigger>
-                <TabsTrigger value="tester" data-testid="tab-tester" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-teal-500 data-[state=active]:to-cyan-500 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-teal-500/30 flex items-center gap-2 transition-all duration-300">
-                  <FlaskConical className="w-4 h-4" />
+                <TabsTrigger value="tester" data-testid="tab-tester" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-teal-500 data-[state=active]:to-cyan-500 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-teal-500/30 flex items-center gap-2 px-4 py-3 text-base transition-all duration-300">
+                  <FlaskConical className="w-5 h-5" />
                   <span className="font-semibold">Script Tester</span>
                 </TabsTrigger>
-                <TabsTrigger value="optimizer" data-testid="tab-optimizer" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-teal-500 data-[state=active]:to-cyan-500 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-teal-500/30 flex items-center gap-2 transition-all duration-300">
-                  <Settings2 className="w-4 h-4" />
+                <TabsTrigger value="optimizer" data-testid="tab-optimizer" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-teal-500 data-[state=active]:to-cyan-500 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-teal-500/30 flex items-center gap-2 px-4 py-3 text-base transition-all duration-300">
+                  <Settings2 className="w-5 h-5" />
                   <span className="font-semibold">System Optimizer</span>
                 </TabsTrigger>
               </TabsList>

@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Plus, Loader2, Trophy, Code2, Sparkles, ArrowRight, Gamepad2, Zap, Activity, Info, Github, Library, FolderOpen, Wand2, FlaskConical, Settings2 } from "lucide-react";
 import SearchBar from "@/components/SearchBar";
 import SearchResultCard, { SearchResult } from "@/components/SearchResultCard";
-import ScriptCard, { Script } from "@/components/ScriptCard";
+import MacroCard, { Macro } from "@/components/MacroCard";
 import AIGenerator from "@/components/AIGenerator";
 import CodeViewer from "@/components/CodeViewer";
 import AddScriptDialog from "@/components/AddScriptDialog";
@@ -22,7 +22,7 @@ import {
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
-const mockCuratedScripts: Script[] = [
+const mockCuratedMacros: Macro[] = [
   {
     id: 'c1',
     name: 'Window Snap Manager',
@@ -625,7 +625,7 @@ export default function Home() {
   const [generatedCode, setGeneratedCode] = useState<string | undefined>();
   const [addDialogOpen, setAddDialogOpen] = useState(false);
   const [previewDialogOpen, setPreviewDialogOpen] = useState(false);
-  const [previewScript, setPreviewScript] = useState<Script | SearchResult | null>(null);
+  const [previewMacro, setPreviewMacro] = useState<Macro | SearchResult | null>(null);
   const [hasSearched, setHasSearched] = useState(false);
 
   const searchMutation = useMutation({
@@ -654,34 +654,34 @@ export default function Home() {
     },
   });
 
-  const personalScriptsQuery = useQuery<{ scripts: Script[] }>({
-    queryKey: ['/api/scripts/personal'],
+  const personalMacrosQuery = useQuery<{ macros: Macro[] }>({
+    queryKey: ['/api/macros/personal'],
   });
 
-  const addScriptMutation = useMutation({
-    mutationFn: async (script: Omit<Script, 'id'>) => {
-      const response = await apiRequest('POST', '/api/scripts/personal', script);
+  const addMacroMutation = useMutation({
+    mutationFn: async (macro: Omit<Macro, 'id'>) => {
+      const response = await apiRequest('POST', '/api/macros/personal', macro);
       return response.json();
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['/api/scripts/personal'] });
+      queryClient.invalidateQueries({ queryKey: ['/api/macros/personal'] });
       toast({
-        title: "Script added",
-        description: "Your script has been added to your library",
+        title: "Macro added",
+        description: "Your macro has been added to your library",
       });
     },
   });
 
-  const deleteScriptMutation = useMutation({
+  const deleteMacroMutation = useMutation({
     mutationFn: async (id: string) => {
-      const response = await apiRequest('DELETE', `/api/scripts/personal/${id}`);
+      const response = await apiRequest('DELETE', `/api/macros/personal/${id}`);
       return response.json();
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['/api/scripts/personal'] });
+      queryClient.invalidateQueries({ queryKey: ['/api/macros/personal'] });
       toast({
-        title: "Script deleted",
-        description: "Script has been removed from your library",
+        title: "Macro deleted",
+        description: "Macro has been removed from your library",
       });
     },
   });
@@ -695,15 +695,15 @@ export default function Home() {
       if (data.success) {
         setGeneratedCode(data.code);
         toast({
-          title: "Script generated",
-          description: "Your AutoHotkey script has been generated successfully",
+          title: "Macro generated",
+          description: "Your AutoHotkey macro has been generated successfully",
         });
       }
     },
     onError: () => {
       toast({
         title: "Generation failed",
-        description: "Unable to generate script. Please try again.",
+        description: "Unable to generate macro. Please try again.",
         variant: "destructive",
       });
     },
@@ -716,7 +716,7 @@ export default function Home() {
     }
   };
 
-  const handleDownload = (item: SearchResult | Script) => {
+  const handleDownload = (item: SearchResult | Macro) => {
     const fileName = 'fileName' in item ? item.fileName : `${item.name}.ahk`;
     const content = 'content' in item ? item.content : item.codePreview;
     const downloadUrl = 'downloadUrl' in item ? item.downloadUrl : null;
@@ -739,8 +739,8 @@ export default function Home() {
     });
   };
 
-  const handlePreview = (item: Script | SearchResult) => {
-    setPreviewScript(item);
+  const handlePreview = (item: Macro | SearchResult) => {
+    setPreviewMacro(item);
     setPreviewDialogOpen(true);
   };
 
@@ -750,39 +750,39 @@ export default function Home() {
     }
   };
 
-  const handleAddScript = (script: Omit<Script, 'id'>) => {
-    addScriptMutation.mutate(script);
+  const handleAddMacro = (macro: Omit<Macro, 'id'>) => {
+    addMacroMutation.mutate(macro);
     setAddDialogOpen(false);
   };
 
-  const handleDeleteScript = (script: Script) => {
-    deleteScriptMutation.mutate(script.id);
+  const handleDeleteMacro = (macro: Macro) => {
+    deleteMacroMutation.mutate(macro.id);
   };
 
   const getPreviewCode = () => {
-    if (!previewScript) return "";
-    if ('content' in previewScript) {
-      return previewScript.content;
+    if (!previewMacro) return "";
+    if ('content' in previewMacro) {
+      return previewMacro.content;
     }
-    return previewScript.codePreview;
+    return previewMacro.codePreview;
   };
 
   const getPreviewTitle = () => {
-    if (!previewScript) return "";
-    if ('fileName' in previewScript) {
-      return previewScript.fileName;
+    if (!previewMacro) return "";
+    if ('fileName' in previewMacro) {
+      return previewMacro.fileName;
     }
-    return previewScript.name;
+    return previewMacro.name;
   };
 
   const searchResults = (searchMutation.data?.results as SearchResult[]) || [];
-  const personalScripts = (personalScriptsQuery.data?.scripts as Script[]) || [];
+  const personalMacros = (personalMacrosQuery.data?.macros as Macro[]) || [];
 
-  const curatedScriptsQuery = useQuery<{ success: boolean; scripts: Script[] }>({
-    queryKey: ["/api/scripts/curated"],
+  const curatedMacrosQuery = useQuery<{ success: boolean; macros: Macro[] }>({
+    queryKey: ["/api/macros/curated"],
   });
 
-  const curatedScripts = (curatedScriptsQuery.data?.scripts as Script[]) || mockCuratedScripts;
+  const curatedMacros = (curatedMacrosQuery.data?.macros as Macro[]) || mockCuratedMacros;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
@@ -791,8 +791,8 @@ export default function Home() {
           <div className="relative group">
             <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-lg blur opacity-30 group-hover:opacity-50 transition-opacity"></div>
             <div className="relative bg-gradient-to-br from-slate-800 to-slate-900 border border-emerald-500/30 rounded-lg px-6 py-3 shadow-xl">
-              <h1 className="text-2xl md:text-3xl font-black bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent tracking-tight" data-testid="text-app-title">
-                AHK SCRIPT FINDER
+              <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent" data-testid="text-app-title">
+                Milamoos AutoHotkey Macro Hub
               </h1>
             </div>
           </div>
@@ -864,8 +864,8 @@ export default function Home() {
             <div className="mb-6 relative">
               <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/20 to-teal-500/20 rounded-xl blur"></div>
               <div className="relative bg-gradient-to-br from-slate-800 to-slate-900 border border-emerald-500/40 rounded-xl p-6 shadow-xl">
-                <h2 className="text-3xl font-black bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent tracking-tight">AUTOHOTKEY SCRIPT TOOLS</h2>
-                <p className="text-slate-300 mt-2 text-sm leading-relaxed">Search GitHub, browse curated scripts, manage your library, and generate custom AHK scripts</p>
+                <h2 className="text-3xl font-black bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent tracking-tight">AUTOHOTKEY MACRO TOOLS</h2>
+                <p className="text-slate-300 mt-2 text-sm leading-relaxed">Search GitHub, browse curated macros, manage your library, and generate custom AHK macros</p>
               </div>
             </div>
             <Tabs defaultValue="search" className="space-y-6">
@@ -876,11 +876,11 @@ export default function Home() {
                 </TabsTrigger>
                 <TabsTrigger value="curated" data-testid="tab-curated" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-emerald-500 data-[state=active]:to-teal-500 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-emerald-500/30 flex items-center gap-2 transition-all duration-300">
                   <Library className="w-4 h-4" />
-                  <span className="font-semibold">Curated Library</span>
+                  <span className="font-semibold">Macro Library</span>
                 </TabsTrigger>
                 <TabsTrigger value="personal" data-testid="tab-personal" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-emerald-500 data-[state=active]:to-teal-500 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-emerald-500/30 flex items-center gap-2 transition-all duration-300">
                   <FolderOpen className="w-4 h-4" />
-                  <span className="font-semibold">My Scripts</span>
+                  <span className="font-semibold">My Macros</span>
                 </TabsTrigger>
                 <TabsTrigger value="ai" data-testid="tab-ai" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-emerald-500 data-[state=active]:to-teal-500 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-emerald-500/30 flex items-center gap-2 transition-all duration-300">
                   <Wand2 className="w-4 h-4" />
@@ -942,16 +942,16 @@ export default function Home() {
           </TabsContent>
 
           <TabsContent value="curated" className="space-y-4 bg-slate-800/30 rounded-xl p-6 border border-slate-700/30">
-            {curatedScriptsQuery.isLoading ? (
+            {curatedMacrosQuery.isLoading ? (
               <div className="flex items-center justify-center py-12">
                 <Loader2 className="w-8 h-8 animate-spin text-emerald-400" />
               </div>
-            ) : curatedScripts.length > 0 ? (
+            ) : curatedMacros.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {curatedScripts.map((script) => (
-                  <ScriptCard
-                    key={script.id}
-                    script={script}
+                {curatedMacros.map((macro) => (
+                  <MacroCard
+                    key={macro.id}
+                    macro={macro}
                     onDownload={handleDownload}
                     onPreview={handlePreview}
                   />
@@ -959,38 +959,38 @@ export default function Home() {
               </div>
             ) : (
               <div className="text-center py-12">
-                <p className="text-slate-300">No curated scripts available</p>
+                <p className="text-slate-300">No curated macros available</p>
               </div>
             )}
           </TabsContent>
 
           <TabsContent value="personal" className="space-y-4 bg-slate-800/30 rounded-xl p-6 border border-slate-700/30">
             <div className="flex justify-end mb-4">
-              <Button onClick={() => setAddDialogOpen(true)} data-testid="button-add-script" className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white shadow-lg shadow-emerald-500/20">
+              <Button onClick={() => setAddDialogOpen(true)} data-testid="button-add-macro" className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white shadow-lg shadow-emerald-500/20">
                 <Plus className="h-4 w-4 mr-2" />
-                Add Script
+                Add Macro
               </Button>
             </div>
-            {personalScriptsQuery.isLoading ? (
+            {personalMacrosQuery.isLoading ? (
               <div className="text-center py-12">
                 <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4 text-emerald-400" />
-                <p className="text-slate-400">Loading your scripts...</p>
+                <p className="text-slate-400">Loading your macros...</p>
               </div>
-            ) : personalScripts.length === 0 ? (
+            ) : personalMacros.length === 0 ? (
               <div className="text-center py-12">
                 <p className="text-slate-300 text-lg mb-4">
-                  No personal scripts yet. Add your first script!
+                  No personal macros yet. Add your first macro!
                 </p>
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {personalScripts.map((script: Script) => (
-                  <ScriptCard
-                    key={script.id}
-                    script={script}
+                {personalMacros.map((macro: Macro) => (
+                  <MacroCard
+                    key={macro.id}
+                    macro={macro}
                     onDownload={handleDownload}
                     onPreview={handlePreview}
-                    onDelete={handleDeleteScript}
+                    onDelete={handleDeleteMacro}
                   />
                 ))}
               </div>
@@ -1008,7 +1008,7 @@ export default function Home() {
             </div>
             {generatedCode && (
               <div className="border-2 border-emerald-400 dark:border-emerald-700 rounded-lg overflow-hidden shadow-sm">
-                <CodeViewer code={generatedCode} title="Generated Script" />
+                <CodeViewer code={generatedCode} title="Generated Macro" />
               </div>
             )}
           </TabsContent>
@@ -1148,7 +1148,7 @@ F1::MsgBox('Hello World!')"
               </div>
             </div>
 
-            {curatedScriptsQuery.isLoading ? (
+            {curatedMacrosQuery.isLoading ? (
               <div className="flex items-center justify-center py-12">
                 <Loader2 className="w-8 h-8 animate-spin text-emerald-600" />
               </div>
@@ -1162,12 +1162,12 @@ F1::MsgBox('Hello World!')"
                     </h3>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {curatedScripts
-                      .filter((script) => script.tags?.some(tag => ['RAM', 'Memory', 'Low-End PC'].includes(tag)))
-                      .map((script) => (
-                        <div key={script.id} className="bg-gradient-to-br from-emerald-100 to-teal-100 dark:from-emerald-950/50 dark:to-teal-950/50 border-2 border-emerald-400 dark:border-emerald-700 rounded-lg overflow-hidden shadow-sm">
-                          <ScriptCard
-                            script={script}
+                    {curatedMacros
+                      .filter((macro) => macro.tags?.some(tag => ['RAM', 'Memory', 'Low-End PC'].includes(tag)))
+                      .map((macro) => (
+                        <div key={macro.id} className="bg-gradient-to-br from-emerald-100 to-teal-100 dark:from-emerald-950/50 dark:to-teal-950/50 border-2 border-emerald-400 dark:border-emerald-700 rounded-lg overflow-hidden shadow-sm">
+                          <MacroCard
+                            macro={macro}
                             onDownload={handleDownload}
                             onPreview={handlePreview}
                           />
@@ -1184,12 +1184,12 @@ F1::MsgBox('Hello World!')"
                     </h3>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {curatedScripts
-                      .filter((script) => script.tags?.some(tag => ['System', 'Optimizer', 'Process', 'Manager', 'Cleanup'].includes(tag)))
-                      .map((script) => (
-                        <div key={script.id} className="bg-gradient-to-br from-emerald-100 to-teal-100 dark:from-emerald-950/50 dark:to-teal-950/50 border-2 border-emerald-400 dark:border-emerald-700 rounded-lg overflow-hidden shadow-sm">
-                          <ScriptCard
-                            script={script}
+                    {curatedMacros
+                      .filter((macro) => macro.tags?.some(tag => ['System', 'Optimizer', 'Process', 'Manager', 'Cleanup'].includes(tag)))
+                      .map((macro) => (
+                        <div key={macro.id} className="bg-gradient-to-br from-emerald-100 to-teal-100 dark:from-emerald-950/50 dark:to-teal-950/50 border-2 border-emerald-400 dark:border-emerald-700 rounded-lg overflow-hidden shadow-sm">
+                          <MacroCard
+                            macro={macro}
                             onDownload={handleDownload}
                             onPreview={handlePreview}
                           />
@@ -1206,12 +1206,12 @@ F1::MsgBox('Hello World!')"
                     </h3>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {curatedScripts
-                      .filter((script) => script.tags?.some(tag => ['Monitor', 'CPU', 'GPU', 'Performance'].includes(tag)))
-                      .map((script) => (
-                        <div key={script.id} className="bg-gradient-to-br from-emerald-100 to-teal-100 dark:from-emerald-950/50 dark:to-teal-950/50 border-2 border-emerald-400 dark:border-emerald-700 rounded-lg overflow-hidden shadow-sm">
-                          <ScriptCard
-                            script={script}
+                    {curatedMacros
+                      .filter((macro) => macro.tags?.some(tag => ['Monitor', 'CPU', 'GPU', 'Performance'].includes(tag)))
+                      .map((macro) => (
+                        <div key={macro.id} className="bg-gradient-to-br from-emerald-100 to-teal-100 dark:from-emerald-950/50 dark:to-teal-950/50 border-2 border-emerald-400 dark:border-emerald-700 rounded-lg overflow-hidden shadow-sm">
+                          <MacroCard
+                            macro={macro}
                             onDownload={handleDownload}
                             onPreview={handlePreview}
                           />
@@ -1246,7 +1246,7 @@ F1::MsgBox('Hello World!')"
       <AddScriptDialog
         open={addDialogOpen}
         onOpenChange={setAddDialogOpen}
-        onSave={handleAddScript}
+        onSave={handleAddMacro}
       />
 
       <Dialog open={previewDialogOpen} onOpenChange={setPreviewDialogOpen}>

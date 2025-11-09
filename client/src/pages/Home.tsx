@@ -786,7 +786,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
-      <header className="border-b border-emerald-500/20 bg-slate-900/80 backdrop-blur-xl sticky top-0 z-50 shadow-2xl shadow-emerald-500/10">
+      <header className="border-b border-emerald-500/20 bg-slate-900/80 backdrop-blur-xl md:sticky md:top-0 z-50 shadow-2xl shadow-emerald-500/10">
         <div className="max-w-7xl mx-auto px-4 md:px-8 py-3 flex items-center gap-3 flex-wrap">
           <div className="relative group flex-1 min-w-fit">
             <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-lg blur opacity-30 group-hover:opacity-50 transition-opacity"></div>

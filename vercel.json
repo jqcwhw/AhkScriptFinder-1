@@ -1,12 +1,8 @@
 
-{
-  "version": 2,
-  "*": [
-    {
-      "src": "package.json",
-      "use": "@vercel/node"
-    }
-  ],
+{ 
+  "version": 2 
+  "src": "package.json",
+  "use": "@vercel/node"
   "routes": [
     {
       "src": "/api/(.*)",
@@ -17,8 +13,12 @@
       "dest": "/dist/client/$1"
     }
   ],
+  
   "env": {
     "NODE_ENV": "production"
-  },
-  "installCommand": "npm install"
+  "installCommand": "npm install" 
+  }
 }
+  {
+  "$schema": "https://openapi.vercel.sh/vercel.json"
+  }

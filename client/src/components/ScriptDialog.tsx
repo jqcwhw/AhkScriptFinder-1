@@ -1,6 +1,10 @@
 import AddScriptDialog from '../AddScriptDialog';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
+const AddScriptDialogExample = () => {
+  const mockScript: Script = { /* … */ };
+  return <AddScriptDialog script={mockScript} />;
+};
 
 export default function AddScriptDialogExample() {
   const [open, setOpen] = useState(false);

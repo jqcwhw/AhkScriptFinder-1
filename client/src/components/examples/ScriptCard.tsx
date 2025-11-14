@@ -10,16 +10,7 @@ const mockScript: Script = {
   version: 'v2',
   isPersonal: false
 };
-export interface Script {
-  id: string;
-  name: string;
-  description: string;
-  tags: string[];
-  downloadCount: number;
-  content: string;
-  version: string;
-  isPersonal: boolean;
-}
+
 
 export default function ScriptCard({
   script,

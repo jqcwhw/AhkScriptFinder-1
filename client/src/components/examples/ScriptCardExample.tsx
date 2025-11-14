@@ -12,18 +12,6 @@ const mockScript: Script = {
 };
 
 
-export default function ScriptCard({
-  script,
-  onDownload,
-  onPreview,
-}: {
-  script: Script;
-  onDownload: (script: Script) => void;
-  onPreview: (script: Script) => void;
-}) {
-  // ...
-}
-
 export default function ScriptCardExample() {
   return (
     <ScriptCard 

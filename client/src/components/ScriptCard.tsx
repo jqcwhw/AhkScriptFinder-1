@@ -1,15 +1,4 @@
-import ScriptCard, { Script } from '../ScriptCard';
-
-const mockScript: Script = {
-  id: '1',
-  name: 'Window Manager',
-  description: 'Quickly move and resize windows with keyboard shortcuts. Supports multi-monitor setups.',
-  tags: ['productivity', 'windows', 'shortcuts'],
-  downloadCount: 5420,
-  content: '; Window management script',
-  version: 'v2',
-  isPersonal: false
-};
+// client/src/components/ScriptCard.tsx
 export interface Script {
   id: string;
   name: string;
@@ -30,15 +19,12 @@ export default function ScriptCard({
   onDownload: (script: Script) => void;
   onPreview: (script: Script) => void;
 }) {
-  // ...
-}
-
-export default function ScriptCardExample() {
   return (
-    <ScriptCard 
-      script={mockScript}
-      onDownload={(script) => console.log('Download:', script.name)}
-      onPreview={(script) => console.log('Preview:', script.name)}
-    />
+    <div className="p-4 border rounded">
+      <h3>{script.name}</h3>
+      <p>{script.description}</p>
+      <button onClick={() => onDownload(script)}>Download</button>
+      <button onClick={() => onPreview(script)}>Preview</button>
+    </div>
   );
 }

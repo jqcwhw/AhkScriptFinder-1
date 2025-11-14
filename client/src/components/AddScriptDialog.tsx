@@ -30,7 +30,6 @@ export default function AddScriptDialog({
   return (
     <div className="p-4 border rounded bg-white shadow">
       <h2 className="text-lg font-bold mb-2">Add Script</h2>
-      {/* Example form fields */}
       <input
         type="text"
         placeholder="Script name"

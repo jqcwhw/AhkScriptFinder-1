@@ -66,12 +66,13 @@ app.use((req, res, next) => {
 (async () => {
   // Validate configuration and display warnings
   const warnings = validateConfig();
-  if (warnings.length > 0) {
-    console.log("\n" + "=".repeat(60));
-    console.log("Configuration Status:");
-    warnings.forEach((warning) => console.log(warning));
-    console.log("=".repeat(60) + "\n");
-  }
+if (warnings.length > 0) {
+  console.log("\n" + "=".repeat(60));
+  console.log("Configuration Status:");
+  warnings.forEach((warning) => console.log(warning.message));
+  console.log("=".repeat(60) + "\n");
+}
+
 
   // Initialize default macros
   await initializeMacros();
